@@ -8,11 +8,9 @@ import os
 master       = Tk()
 master.title('Video to Audio')
 
-#Icon
-# photo = PhotoImage(file = "icon.png")
-# master.iconphoto(False, photo)
-
 #functions
+
+# function to get path of the mp4 file to convert
 def get_file():
     filename = filedialog.askopenfilename(initialdir='c:/',title='Please select a file',filetype=[('MP4 Files', '*.mp4')])
     try:
@@ -22,6 +20,7 @@ def get_file():
     except:
         notif.config(fg='red', text = 'No file Selected ')
 
+# function that converts the file
 def mp4_to_mp3(mp4, mp3):
     mp4_without_frames =mp.AudioFileClip(mp4)
     mp4_without_frames.write_audiofile(mp3,logger=None,verbose=False)
@@ -37,7 +36,7 @@ def convert():
         namef="Converted\\"+l[0]+'.mp3'
         mp4_to_mp3(a, namef)
         notif.config(fg='green', text = 'Successfully converted ' + str(temp_file.get()) )
-        os.startfile(r".\Converted")
+        os.startfile(r".\Converted")#opens the path where converted file is stored
     except:
         notif.config(fg='red', text = "Can't Convert the file " + str(temp_file.get()) )
 
@@ -45,7 +44,9 @@ def convert():
 outputpath = r'.\Converted' 
 if not os.path.exists(outputpath):
     os.makedirs(outputpath)
-    
+
+# GUI
+
 #Labels
 Label(master, text="Convert Video to Audio", font=('Calibri',15),foreground='blue').grid(row=0, sticky=N)
 Label(master, text="Audio file folder opens after the convertion", font=('Calibri',11),foreground='blue').grid(row=1, sticky=W, padx=5 ,pady=10)
